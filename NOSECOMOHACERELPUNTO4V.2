@@ -557,3 +557,34 @@ class EventoMedico:
         else:
             return "No hay historial clínico registrado."
 """
+
+#AGREGO ALGO QUE QUIZAS AYUDE
+
+
+# Crear el historial del paciente
+historial = NodoHistorial("Inicio", "Historial del Paciente")
+
+# Añadir consultas
+consulta1 = NodoHistorial("Consulta", "Consulta 1")
+consulta2 = NodoHistorial("Consulta", "Consulta 2")
+historial.agregar_evento(consulta1)
+historial.agregar_evento(consulta2)
+
+# Añadir diagnósticos y tratamientos a la Consulta 1
+diagnostico1_1 = NodoHistorial("Diagnóstico", "Diagnóstico 1.1")
+tratamiento1_1_1 = NodoHistorial("Tratamiento", "Tratamiento 1.1.1")
+diagnostico1_1.agregar_evento(tratamiento1_1_1)
+consulta1.agregar_evento(diagnostico1_1)
+
+diagnostico1_2 = NodoHistorial("Diagnóstico", "Diagnóstico 1.2")
+seguimiento1_2 = NodoHistorial("Seguimiento", "Seguimiento 1.2")
+diagnostico1_2.agregar_evento(seguimiento1_2)
+consulta1.agregar_evento(diagnostico1_2)
+
+# Añadir diagnóstico y tratamiento a la Consulta 2
+diagnostico2_1 = NodoHistorial("Diagnóstico", "Diagnóstico 2.1")
+tratamiento2_1_1 = NodoHistorial("Tratamiento", "Tratamiento 2.1.1")
+diagnostico2_1.agregar_evento(tratamiento2_1_1)
+consulta2.agregar_evento(diagnostico2_1)
+
+print(historial)
