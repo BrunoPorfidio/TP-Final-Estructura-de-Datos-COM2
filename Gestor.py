@@ -4,6 +4,7 @@ from Paciente import Paciente, EventoMedico, Medicamento, Enfermedad
 from GrafoHospital import GrafoHospitales
 
 class GestorPacientes:
+
     def __init__(self):
         self.arbol_pacientes = ArbolAVL()
         self.cola_prioridad = ColaPrioridad()
@@ -75,6 +76,80 @@ class GestorPacientes:
         else:
             print(f"No se encontró paciente con ID {id_paciente}.")
 
+    def buscar_en_historial(self, id: int, clave: str, tipo: str):                          #PUNTO 2
+        """
+        Busca recursivamente medicamentos o enfermedades clave en el historial de un paciente.
+        """
+        paciente = self.buscar_paciente(id)
+        if not paciente:
+            print(f"Paciente con ID {id} no encontrado.")
+            return
+        
+
+        def buscar_recursivo(lista: list, indice=0):
+            if indice >= len(lista):
+                return False
+            elemento = lista[indice]
+            # Obtiene el nombre del medicamento o enfermedad (asegurando que sea string)
+            #elemento = elemento.get_nombre() if hasattr(elemento, 'get_nombre') else str(elemento)
+            # Comparación ignorando mayúsculas y minúsculas
+            if clave.lower() in elemento.get_nombre().lower():
+                print(f"Encontrado: {elemento.get_nombre()}, Fecha: {elemento.fecha.strftime('%d-%m-%Y')}")
+                return True
+            return buscar_recursivo(lista, indice + 1)
+
+        if tipo == "medicamento":
+            encontrado = buscar_recursivo(paciente.medicamentos)
+            if not encontrado:
+                print(f"No se encontró ninguna coincidencia con la clave '{clave}' en {tipo}s.")
+        else:
+            encontrado = buscar_recursivo(paciente.enfermedades)
+            if not encontrado:
+                print(f"No se encontró ninguna coincidencia con la clave '{clave}' en {tipo}es.")
+
+
+
+
+    def agregar_evento_historial(self, id: int, tipo: str, descripcion: str, id_padre: int = None):
+        """
+        Agrega un evento médico al historial clínico de un paciente.
+        Si no se especifica un ID de padre, el evento se agrega como raíz.
+        """
+        paciente = self.buscar_paciente(id)
+        if not paciente:
+            print(f"Paciente con ID {id} no encontrado.")
+            return
+
+        nuevo_evento = EventoMedico(tipo, descripcion)
+
+        if id_padre is None:
+            if paciente.historial.raiz is None:
+                paciente.historial.agregar_evento(nuevo_evento)  # Agregar como raíz
+            else:
+                print("El historial ya tiene una raíz. Especifica un evento padre para continuar.")
+        else:
+            # Buscar el evento padre en el historial
+            evento_padre = self._buscar_evento_por_id(paciente.historial.raiz, id_padre)
+            if not evento_padre:
+                print(f"Evento padre con ID {id_padre} no encontrado.")
+                return
+            paciente.historial.agregar_evento(nuevo_evento, evento_padre)  # Agregar como hijo
+
+        print(f"Evento '{tipo}' agregado al historial del paciente {paciente.nombre}.")
+
+    def mostrar_historial_paciente(self, id: int):
+        """
+        Muestra el historial clínico completo de un paciente.
+        """
+        paciente = self.buscar_paciente(id)
+        if not paciente:
+            print(f"Paciente con ID {id} no encontrado.")
+            return
+
+        print(f"Historial clínico del paciente {paciente.nombre}:")
+        paciente.historial.mostrar_historial()
+
+
     def mostrar_historial_clinico(self, id_paciente: int):
         paciente = self.buscar_paciente(id_paciente)
         if paciente:
@@ -89,7 +164,6 @@ class GestorPacientes:
 
     def mostrar_cola_prioridad(self):
         self.cola_prioridad.mostrar()
-
 
     def mostrar_ruta_optima(self, origen: str, destino: str):
         ruta = self.grafo_hospital.buscar_camino_mas_corto(origen, destino)
@@ -153,3 +227,6 @@ class GestorPacientes:
     def mostrar_cola_prioridad(self):
         print("Pacientes en la cola de prioridad (de mayor a menor gravedad):")
         self.cola_prioridad.mostrar()  # Llama al método mostrar de ColaPrioridad
+
+
+    
