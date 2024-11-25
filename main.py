@@ -13,7 +13,9 @@ def main():
         print("7. Buscar paciente")
         print("8. Agregar enfermedad a paciente")
         print("9. Agregar medicamento a paciente")
-        print("10. Salir")
+        print("10. Mostrar cola de prioridad de pacientes")
+        print("11. Atender al paciente más grave")
+        print("12. Salir")
         
         opcion = input("Seleccione una opción: ")
         
@@ -37,7 +39,7 @@ def main():
             gravedad = int(gravedad) if gravedad else None
             gestor.modificar_paciente(id_paciente, nombre if nombre else None, edad, gravedad)
         elif opcion == "4":
-            pacientes = gestor.arbol_pacientes.recorrido_inorden()
+            pacientes = gestor.mostrar_todos_pacientes()
             for paciente in pacientes:
                 print(paciente)
         elif opcion == "5":
@@ -61,10 +63,20 @@ def main():
             nombre_medicamento = input("Nombre del medicamento: ")
             gestor.agregar_medicamento(id_paciente, nombre_medicamento)
         elif opcion == "10":
+            origen = input("Ingrese el departamento de origen: ")
+            destino = input("Ingrese el departamento de destino: ")
+            gestor.mostrar_ruta_optima(origen, destino)
+        elif opcion == "11":
+            paciente_atendido = gestor.atender_paciente_mas_grave()
+            if paciente_atendido:
+                print(f"Se ha atendido al paciente más grave: {paciente_atendido}")
+            else:
+                print("No hay pacientes en espera para atender.")
+        
+        elif opcion == "12":
             print("Saliendo del sistema...")
             break
         else:
             print("Opción inválida. Por favor, intente de nuevo.")
-
 if __name__ == "__main__":
     main()
