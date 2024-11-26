@@ -107,13 +107,6 @@ class GrafoHospitales:
                     visited[vecino] = hospital_actual
                     queue.append(vecino)
 
-    def mostrar_hospitales(self):
-        """Muestra todos los hospitales con su ID y especialidad."""
-        print("Lista de hospitales:")
-        for hospital in self.hospitales.values():
-            print(f"ID: {hospital.id}, Nombre: {hospital.nombre}, Especialidad: {hospital.especialidad}")
-
-
     def dfs(self, inicio: int, fin: int):
         # Verificar si los hospitales con los IDs proporcionados existen en el grafo
         if inicio not in self.hospitales or fin not in self.hospitales:
@@ -140,3 +133,9 @@ class GrafoHospitales:
                 if vecino not in visited:
                     visited[vecino] = hospital_actual
                     stack.append(vecino)
+
+    def mostrar_hospitales(self):
+        """Muestra todos los hospitales con su ID y especialidad."""
+        print("Lista de hospitales:")
+        for hospital in self.hospitales.values():
+            print(f"ID: {hospital.id}, Nombre: {hospital.nombre}, Especialidad: {hospital.especialidad}")
