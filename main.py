@@ -59,31 +59,29 @@ def main():
 
         categorias = {
             "Gestión de Pacientes": [
-                "Agregar paciente nuevo",
-                "Eliminar paciente",
-                "Modificar datos de un paciente",
-                "Mostrar Pacientes Registrados",
-                "Buscar paciente",
-                "Mostrar cola de prioridad de pacientes",
-                "Atender al paciente más grave"
+                " Agregar paciente nuevo",
+                " Eliminar paciente",
+                " Modificar datos de un paciente",
+                " Mostrar Pacientes Registrados",
+                " Buscar paciente", 
+                " Mostrar cola de prioridad de pacientes", 
+                " Atender al paciente más grave" 
             ],
             "Historial Médico": [
-                "Agregar evento médico a paciente",
-                "Mostrar historial clínico de paciente",
-                "Agregar enfermedad a paciente",
-                "Agregar medicamento a paciente"
+                " Agregar evento médico a paciente", 
+                " Mostrar historial clínico de paciente", 
+                " Agregar enfermedad a paciente", 
+                " Agregar medicamento a paciente" 
             ],
             "Gestión de Hospitales": [
-                "Agregar hospital",
-                "Agregar conexión entre hospitales",
-                "Buscar hospital",
-                "Mostrar todos los hospitales"
+                " Agregar hospital", 
+                " Agregar conexión entre hospitales", 
+                " Mostrar todos los hospitales" 
             ],
             "Rutas y Navegación": [
-                "Mostrar ruta óptima entre departamentos",
-                "Mostrar mejor ruta de ambulancia",
-                "Encontrar ruta usando BFS",
-                "Encontrar ruta usando DFS"
+                " Mostrar mejor ruta de ambulancia", 
+                " Encontrar ruta usando BFS", 
+                " Encontrar ruta usando DFS" 
             ]
         }
 
@@ -122,14 +120,10 @@ def main():
             print(paciente) if paciente else print("Paciente no encontrado.")
             nombre = input("Nuevo nombre (dejar en blanco si no se desea modificar): ")
             edad = input("Nueva edad (dejar en blanco si no se desea modificar): ")
-            gravedad = input(
-                "Nueva gravedad (dejar en blanco si no se desea modificar): "
-            )
+            gravedad = input("Nueva gravedad (dejar en blanco si no se desea modificar): ")
             edad = int(edad) if edad else None
             gravedad = int(gravedad) if gravedad else None
-            gestor.modificar_paciente(
-                id_paciente, nombre if nombre else None, edad, gravedad
-            )
+            gestor.modificar_paciente(id_paciente, nombre if nombre else None, edad, gravedad)
             print(gestor.buscar_paciente(id_paciente))
 
         elif opcion == "4":
@@ -137,42 +131,13 @@ def main():
 
         elif opcion == "5":
             id_paciente = int(input("Ingrese el ID del paciente: "))
-            tipo = input("Tipo de evento (CONSULTA/DIAGNOSTICO/TRATAMIENTO): ")
-            detalles = input("Detalles del evento: ")
-            gestor.agregar_evento_medico(id_paciente, tipo, detalles)
-
-        elif opcion == "6":
-            id_paciente = int(input("Ingrese el ID del paciente: "))
-            gestor.mostrar_historial_clinico(id_paciente)
-
-        elif opcion == "7":
-            id_paciente = int(input("Ingrese el ID del paciente: "))
             paciente = gestor.buscar_paciente(id_paciente)
             print(paciente) if paciente else print("Paciente no encontrado.")
-            
-        elif opcion == "8":
-            id_paciente = int(
-                input("Ingrese el ID del paciente para agregar enfermedad: ")
-            )
-            nombre_enfermedad = input("Nombre de la enfermedad: ")
-            gestor.agregar_enfermedad(id_paciente, nombre_enfermedad)
 
-        elif opcion == "9":
-            id_paciente = int(
-                input("Ingrese el ID del paciente para agregar medicamento: ")
-            )
-            nombre_medicamento = input("Nombre del medicamento: ")
-            gestor.agregar_medicamento(id_paciente, nombre_medicamento)
-
-        elif opcion == "10":
+        elif opcion == "6":
             gestor.mostrar_cola_prioridad()
 
-        elif opcion == "11":
-            origen = int(input("Ingrese el hospital de origen: "))
-            destino = int(input("Ingrese el hospital de destino: "))
-            grafo_hospitales.mejor_ruta_ambulancia(origen, destino)
-
-        elif opcion == "12":
+        elif opcion == "7":
 
             paciente_atendido = gestor.atender_paciente_mas_grave()
             if paciente_atendido:
@@ -180,14 +145,38 @@ def main():
             else:
                 print("No hay pacientes en espera para atender.")
 
-        elif opcion == "13":
+        elif opcion == "8":
+            id_paciente = int(input("Ingrese el ID del paciente: "))
+            tipo = input("Tipo de evento (CONSULTA/DIAGNOSTICO/TRATAMIENTO): ")
+            detalles = input("Detalles del evento: ")
+            gestor.agregar_evento_medico(id_paciente, tipo, detalles)
+
+        elif opcion == "9":
+            id_paciente = int(input("Ingrese el ID del paciente: "))
+            gestor.mostrar_historial_clinico(id_paciente)
+            
+        elif opcion == "10":
+            id_paciente = int(
+                input("Ingrese el ID del paciente para agregar enfermedad: ")
+            )
+            nombre_enfermedad = input("Nombre de la enfermedad: ")
+            gestor.agregar_enfermedad(id_paciente, nombre_enfermedad)
+
+        elif opcion == "11":
+            id_paciente = int(
+                input("Ingrese el ID del paciente para agregar medicamento: ")
+            )
+            nombre_medicamento = input("Nombre del medicamento: ")
+            gestor.agregar_medicamento(id_paciente, nombre_medicamento)
+
+        elif opcion == "12":
             nombre_hospital = input("Ingrese el nombre del hospital a agregar: ")
             especialidad = input("Ingrese la especialidad del hospital: ")
             grafo_hospitales.agregar_hospital(id_hospital, nombre_hospital, especialidad)
             print(f"Hospital '{nombre_hospital}' agregado.")
             id_hospital += 1  # Incrementar el ID para el próximo hospital
             
-        elif opcion == "14":
+        elif opcion == "13":
 
             grafo_hospitales.mostrar_hospitales()
             hospital1 = int(input("Ingrese el ID del primer hospital: "))
@@ -195,7 +184,7 @@ def main():
             distancia = int(input("Ingrese la distancia (en KM) entre los hospitales: "))
             grafo_hospitales.agregar_conexion(hospital1, hospital2, distancia)
 
-        elif opcion == "15":
+        elif opcion == "14":
             print("---------------------------------------------")
             print("Lista de hospitales: \n")
             for hospital in grafo_hospitales.hospitales.values():
@@ -203,6 +192,11 @@ def main():
                 print(hospital)
 
             print("---------------------------------------------")
+
+        elif opcion == "15":
+            origen = int(input("Ingrese el hospital de origen: "))
+            destino = int(input("Ingrese el hospital de destino: "))
+            grafo_hospitales.mejor_ruta_ambulancia(origen, destino)
 
         elif opcion == "16":
 
@@ -242,7 +236,7 @@ def main():
             else:
                 print(f"No se encontró una ruta desde el hospital con ID {origen_id} a {destino_id}.")
 
-        elif opcion == "28":
+        elif opcion == "18":
             print("Saliendo del sistema...")
             sigue_eligiendo = False
 
