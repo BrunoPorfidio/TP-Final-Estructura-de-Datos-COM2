@@ -42,3 +42,16 @@ class ColaPrioridad:
     
         for paciente in pacientes_ordenados:
             print(f"Gravedad: {paciente.gravedad}, ID: {paciente.id}, Nombre: {paciente.nombre}")
+
+    def desacolar(self):
+        """ Elimina y retorna el paciente con mayor gravedad (prioridad). """
+        while self.heap:
+            # Extraemos el paciente con mayor gravedad
+            prioridad, count, paciente = heapq.heappop(self.heap)
+            # Si el paciente no ha sido removido, lo retornamos
+            if paciente != self.REMOVED:
+                del self.entrada_finder[paciente]
+                return paciente
+        # Si la cola está vacía
+        print("La cola de prioridad está vacía.")
+        return None
