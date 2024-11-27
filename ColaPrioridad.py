@@ -1,9 +1,8 @@
 import heapq
 from Paciente import Paciente
 
-import heapq
-
 class ColaDePrioridad:
+    
     def __init__(self):
         self.heap = []  # Lista de pacientes organizada por prioridad
         self.buscar_entrada = {}  # Mapeo de pacientes a sus entradas en la cola
@@ -21,9 +20,17 @@ class ColaDePrioridad:
         self.contador += 1
 
     def eliminar(self, paciente: Paciente):
+
         """Elimina un paciente de la cola de prioridad."""
-        entrada = self.buscar_entrada.pop(paciente)
-        entrada[-1] = self.PACIENTE_ELIMINADO  # Marca el paciente como eliminado
+        if paciente in self.buscar_entrada:
+            # Obtener la entrada del paciente en el diccionario
+            entrada = self.buscar_entrada.pop(paciente)
+            
+            # Marca el paciente como eliminado (de forma lógica)
+            entrada[-1] = self.PACIENTE_ELIMINADO  
+            
+            # Es necesario reorganizar el heap para que el paciente "eliminado" sea removido correctamente
+            heapq.heapify(self.heap)  # Reorganiza el heap
 
     def actualizar_gravedad(self, paciente: Paciente, nueva_gravedad: int):
         """Actualiza la gravedad de un paciente en la cola."""

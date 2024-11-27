@@ -7,6 +7,16 @@ class NodoAVL:
         self.derecha = None
         self.altura = 1
 
+    def __eq__(self, other):
+        """Compara dos nodos AVL basándose en el paciente que contienen."""
+        if isinstance(other, NodoAVL):
+            return self.paciente == other.paciente  # Compara los pacientes
+        return False
+
+    def __hash__(self):
+        """Genera un valor hash basado en el paciente."""
+        return hash(self.paciente)  # Usa el hash del paciente para el hash del nodo
+
 class ArbolAVL:
     def __init__(self):
         self.raiz = None
