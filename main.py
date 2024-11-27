@@ -1,7 +1,5 @@
 from Gestor import GestorPacientes
-from GrafoHospital import (
-    GrafoHospitales
-)
+from GrafoHospital import GrafoHospitales
 
 
 def main():
@@ -10,7 +8,7 @@ def main():
     id_hospital = 1  # Contador para asignar ID a los hospitales
 
 #---------------------------------------------------------------------------------------------------------------
-
+    """
     grafo_hospitales.agregar_hospital(1, "Hospital A", "Cardiología")
     id_hospital +=1
     grafo_hospitales.agregar_hospital(2, "Hospital B", "Neurología")
@@ -29,8 +27,8 @@ def main():
     grafo_hospitales.agregar_conexion(3, 4, 20)  # Hospital C <-> Hospital D
     grafo_hospitales.agregar_conexion(4, 5, 25)  # Hospital D <-> Hospital E
     grafo_hospitales.agregar_conexion(1, 5, 30)  # Hospital A <-> Hospital E
-
-
+    """
+    
     pacientes_ejemplo = [
         {"nombre": "Juan Pérez", "edad": 30, "gravedad": 4, "id_hospital": "1"},  # Hospital Central
         {"nombre": "Ana Gómez", "edad": 45, "gravedad": 5, "id_hospital": "2"},  # Hospital San José
@@ -49,7 +47,6 @@ def main():
     
     print("Pacientes de ejemplo agregados.\n")
 #---------------------------------------------------------------------------------------------------------------------
-
     sigue_eligiendo = True
 
     while sigue_eligiendo:
@@ -100,91 +97,58 @@ def main():
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
+
+            # SE DEJAN LOS INPUTS ACA PARA QUE SE AGREGEN SOLOS A LOS PACIENTES, PERO EN EL CODIGO IDEAL DEBERIA APARECER SOLO LA FUNCION
+            # GESTOR.AGREGAR_PACIENTE()
+
             nombre = input("Nombre del paciente: ")
             edad = int(input("Edad del paciente: "))
             gravedad = int(input("Gravedad del paciente (1-5): "))
             grafo_hospitales.mostrar_hospitales()
             id_hospital_paciente = input("ID del Hospital del paciente: ")
             gestor.agregar_paciente(nombre, edad, gravedad, id_hospital_paciente)
+            #gestor.agregar_paciente()
 
-        elif opcion == "2":
-            id_paciente = int(input("Ingrese el ID del paciente a eliminar: "))
-            if gestor.eliminar_paciente(id_paciente):
-                print("Paciente eliminado.")
-            else:
-                print("Paciente no encontrado.")
+        elif opcion == "2":                     # YA VALIDADO
+            gestor.eliminar_paciente()     
 
-        elif opcion == "3":
-            id_paciente = int(input("Ingrese el ID del paciente a modificar: "))
-            paciente = gestor.buscar_paciente(id_paciente)
-            print(paciente) if paciente else print("Paciente no encontrado.")
-            nombre = input("Nuevo nombre (dejar en blanco si no se desea modificar): ")
-            edad = input("Nueva edad (dejar en blanco si no se desea modificar): ")
-            gravedad = input("Nueva gravedad (dejar en blanco si no se desea modificar): ")
-            edad = int(edad) if edad else None
-            gravedad = int(gravedad) if gravedad else None
-            gestor.modificar_paciente(id_paciente, nombre if nombre else None, edad, gravedad)
-            print(gestor.buscar_paciente(id_paciente))
+        elif opcion == "3":                     # YA VALIDADO
+            gestor.modificar_paciente()
 
-        elif opcion == "4":
-            pacientes = gestor.mostrar_todos_pacientes()
+        elif opcion == "4":                     # NO REQUIERE VALIDACION, SOLO ES MOSTRAR PACIENTES
+            gestor.mostrar_todos_pacientes()
 
-        elif opcion == "5":
-            id_paciente = int(input("Ingrese el ID del paciente: "))
-            paciente = gestor.buscar_paciente(id_paciente)
-            print(paciente) if paciente else print("Paciente no encontrado.")
+        elif opcion == "5":                     # YA VALIDADO
+            paciente = gestor.buscar_paciente()
+            print(paciente)
 
-        elif opcion == "6":
+        elif opcion == "6":                     # NO REQUIERE VALIDACION, SOLO ES MOSTRAR COLA DE PRIORIDAD
             gestor.mostrar_cola_prioridad()
 
-        elif opcion == "7":
+        elif opcion == "7":                     # YA VALIDADO
 
-            paciente_atendido = gestor.atender_paciente_mas_grave()
-            if paciente_atendido:
-                print(f"\nPaciente atendido: {paciente_atendido.nombre} (ID: {paciente_atendido.id}, Gravedad: {paciente_atendido.gravedad})")
-            else:
-                print("No hay pacientes en espera para atender.")
+            gestor.atender_paciente_mas_grave()
 
-        elif opcion == "8":
-            id_paciente = int(input("Ingrese el ID del paciente: "))
-            tipo = input("Tipo de evento (CONSULTA/DIAGNOSTICO/TRATAMIENTO): ")
-            detalles = input("Detalles del evento: ")
-            gestor.agregar_evento_medico(id_paciente, tipo, detalles)
+        elif opcion == "8":                     # YA VALIDADO
+            gestor.agregar_evento_medico()
 
-        elif opcion == "9":
-            id_paciente = int(input("Ingrese el ID del paciente: "))
-            gestor.mostrar_historial_clinico(id_paciente)
+        elif opcion == "9":                     # YA VALIDADO
+            gestor.mostrar_historial_clinico()
             
-        elif opcion == "10":
-            id_paciente = int(
-                input("Ingrese el ID del paciente para agregar enfermedad: ")
-            )
-            nombre_enfermedad = input("Nombre de la enfermedad: ")
-            gestor.agregar_enfermedad(id_paciente, nombre_enfermedad)
+        elif opcion == "10":                    # YA VALIDADO
+            gestor.agregar_enfermedad()
 
-        elif opcion == "11":
-            id_paciente = int(
-                input("Ingrese el ID del paciente para agregar medicamento: ")
-            )
-            nombre_medicamento = input("Nombre del medicamento: ")
-            gestor.agregar_medicamento(id_paciente, nombre_medicamento)
+        elif opcion == "11":                    # YA VALIDADO
+            gestor.agregar_medicamento()
 
-        elif opcion == "12":
-            nombre_hospital = input("Ingrese el nombre del hospital a agregar: ")
-            especialidad = input("Ingrese la especialidad del hospital: ")
-            grafo_hospitales.agregar_hospital(id_hospital, nombre_hospital, especialidad)
-            print(f"Hospital '{nombre_hospital}' agregado.")
+        elif opcion == "12":                    # YA VALIDADO
+            grafo_hospitales.agregar_hospital(id_hospital)
             id_hospital += 1  # Incrementar el ID para el próximo hospital
             
-        elif opcion == "13":
+        elif opcion == "13":                    # YA VALIDADO
+            grafo_hospitales.agregar_conexion()
 
-            grafo_hospitales.mostrar_hospitales()
-            hospital1 = int(input("Ingrese el ID del primer hospital: "))
-            hospital2 = int(input("Ingrese el ID del segundo hospital: "))
-            distancia = int(input("Ingrese la distancia (en KM) entre los hospitales: "))
-            grafo_hospitales.agregar_conexion(hospital1, hospital2, distancia)
-
-        elif opcion == "14":
+        elif opcion == "14":                    # NO REQUIERE VALIDACION, SOLO ES MOSTRAR LOS HOSPITALES
             print("---------------------------------------------")
             print("Lista de hospitales: \n")
             for hospital in grafo_hospitales.hospitales.values():
@@ -193,25 +157,18 @@ def main():
 
             print("---------------------------------------------")
 
-        elif opcion == "15":
-            origen = int(input("Ingrese el hospital de origen: "))
-            destino = int(input("Ingrese el hospital de destino: "))
-            grafo_hospitales.mejor_ruta_ambulancia(origen, destino)
+        elif opcion == "15":                    # YA VALIDADO
+            grafo_hospitales.mejor_ruta_ambulancia()
 
-        elif opcion == "16":
+        elif opcion == "16":                    # YA VALIDADO
 
-            # Solicitar los IDs de los hospitales de origen y destino
+            # Mostrar los hospitales disponibles
             grafo_hospitales.mostrar_hospitales()
-            try:
-                origen = int(input("Ingrese el ID del hospital de origen para BFS: "))
-                destino = int(input("Ingrese el ID del hospital de destino para BFS: "))
-            except ValueError:
-                print("Por favor ingrese un ID válido (un número entero).")
-                return
-            
-            # Llamar a la función BFS utilizando los IDs
+            origen = gestor.obtener_id_hospital("Ingrese el ID del hospital de origen para BFS: ", grafo_hospitales.hospitales)
+            destino = gestor.obtener_id_hospital("Ingrese el ID del hospital de destino para BFS: ", grafo_hospitales.hospitales)
+            # Llamar a la función BFS utilizando los IDs de los hospitales
             ruta_bfs = grafo_hospitales.bfs(origen, destino)
-            
+
             # Mostrar el resultado de la búsqueda
             if ruta_bfs:
                 print(f"La ruta encontrada por BFS desde el hospital con ID {origen} hasta el hospital con ID {destino} es:")
@@ -219,30 +176,40 @@ def main():
             else:
                 print(f"No se encontró una ruta desde el hospital con ID {origen} a {destino}.")
 
-        elif opcion == "17":
+        elif opcion == "17":                    # YA VALIDADO
 
+            # Mostrar los hospitales disponibles
             grafo_hospitales.mostrar_hospitales()
-            # Solicitar al usuario los IDs de los hospitales en lugar de los nombres
-            origen_id = int(input("Ingrese el ID del hospital de origen para DFS: "))
-            destino_id = int(input("Ingrese el ID del hospital de destino para DFS: "))
-            
-            # Llamada al método DFS usando los IDs de los hospitales
-            ruta_dfs = grafo_hospitales.dfs(origen_id, destino_id)
-            
+            origen = gestor.obtener_id_hospital("Ingrese el ID del hospital de origen para DFS: ", grafo_hospitales.hospitales)
+            destino = gestor.obtener_id_hospital("Ingrese el ID del hospital de destino para DFS: ", grafo_hospitales.hospitales)
+
+            # Llamar a la función DFS utilizando los IDs de los hospitales
+            ruta_dfs = grafo_hospitales.dfs(origen, destino)
+
+            # Mostrar el resultado de la búsqueda
             if ruta_dfs:
-                print(f"La ruta encontrada por DFS desde el hospital con ID {origen_id} hasta el hospital con ID {destino_id} es:")
+                print(f"La ruta encontrada por DFS desde el hospital con ID {origen} hasta el hospital con ID {destino} es:")
                 # Mostrar la ruta usando los nombres de los hospitales correspondientes a los IDs
                 print(" -> ".join(str(grafo_hospitales.hospitales[hospital_id].nombre) for hospital_id in ruta_dfs))
             else:
-                print(f"No se encontró una ruta desde el hospital con ID {origen_id} a {destino_id}.")
+                print(f"No se encontró una ruta desde el hospital con ID {origen} a {destino}.")
 
         elif opcion == "18":
+            gestor.agregar_paso_diagnostico() 
+
+        elif opcion == "19":
+            gestor.agregar_dependencia_diagnostico()
+
+        elif opcion == "20":
+            gestor.mostrar_secuencia_diagnostico()
+
+        elif opcion == "21":
             print("Saliendo del sistema...")
             sigue_eligiendo = False
 
+
         else:
             print("Opción inválida. Por favor, intente de nuevo.")
-
 
 if __name__ == "__main__":
     main()
