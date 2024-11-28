@@ -1,4 +1,4 @@
-# Documentación del Proyecto: Sistema de Gestión Hospitalaria
+# TP Final Estructura de Datos Com2. UNAB: Sistema de Gestión de Datos Medicos.
 
 ## Descripción del Proyecto
 Este proyecto es un sistema de gestión hospitalaria desarrollado en Python. Permite la administración de pacientes, hospitales y la gestión de eventos médicos, medicamentos y enfermedades. El sistema está diseñado para facilitar la interacción entre los hospitales y los pacientes, así como para optimizar la atención médica a través de la gestión de la gravedad de los pacientes y la búsqueda de rutas entre hospitales.
