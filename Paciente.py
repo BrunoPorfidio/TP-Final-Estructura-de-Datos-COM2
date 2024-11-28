@@ -16,16 +16,6 @@ class Paciente:
         self.medicamentos: List[Medicamento] = []  # Cambiado a lista de objetos Medicamento
         self.enfermedades: List[Enfermedad] = []  # Nuevo historial de enfermedades
 
-    def __eq__(self, other):
-        """Compara dos pacientes basándose en el ID (o cualquier atributo único)."""
-        if isinstance(other, Paciente):
-            return self.id == other.id
-        return False
-
-    def __hash__(self):
-        """Genera un valor hash basado en el ID del paciente."""
-        return hash(self.id)
-
     def agregar_evento_medico(self, tipo: str, detalles: str):
         self.historial.append(EventoMedico(tipo, detalles))
 
