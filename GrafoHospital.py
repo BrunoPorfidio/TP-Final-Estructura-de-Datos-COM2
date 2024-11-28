@@ -19,8 +19,10 @@ class GrafoHospitales:
         especialidad: str = None,
         solicitar_datos: bool = True,
     ):
+        
         if id is None:
                 id = self.generar_id()
+
         # Validación del nombre del hospital
         # Si se debe solicitar datos al usuario
         if solicitar_datos:
@@ -58,7 +60,7 @@ class GrafoHospitales:
             # Si el hospital ya existe, mostrar mensaje de error
             print(f"El hospital con ID {id} ya existe.")
 
-    def agregar_conexion(self, id_hospital1: int, id_hospital2: int,distancia: int, solicitar_datos: bool = True):
+    def agregar_conexion(self, id_hospital1: int = None, id_hospital2: int= None,distancia: int= None, solicitar_datos: bool = True):
         if solicitar_datos:
             # Mostrar hospitales disponibles
             self.mostrar_hospitales()
@@ -104,15 +106,20 @@ class GrafoHospitales:
                         print("La distancia debe ser un número entero positivo.")
                 else:
                     print("La distancia debe ser un número entero.")
+        else:
+            # Si no se solicitan datos, se utilizan los valores de los argumentos
+            if id_hospital1 is None or id_hospital2 is None or distancia is None:
+                print("Error: se deben proporcionar los valores de id_hospital1, id_hospital2 y distancia")
+                return
 
-            # Verificar si la conexión ya existe
-            if id_hospital2 in self.hospitales[id_hospital1].conexiones:
-                print(f"Ya existe una conexión entre el hospital {id_hospital1} y el hospital {id_hospital2}.")
-            else:
-                # Agregar la conexión entre los hospitales
-                self.hospitales[id_hospital1].conexiones[id_hospital2] = distancia
-                self.hospitales[id_hospital2].conexiones[id_hospital1] = distancia
-                print(f"Conexión entre '{id_hospital1}' y '{id_hospital2}' agregada con distancia {distancia}.")
+        # Verificar si la conexión ya existe
+        if id_hospital2 in self.hospitales[id_hospital1].conexiones:
+            print(f"Ya existe una conexión entre el hospital {id_hospital1} y el hospital {id_hospital2}.")
+        else:
+            # Agregar la conexión entre los hospitales
+            self.hospitales[id_hospital1].conexiones[id_hospital2] = distancia
+            self.hospitales[id_hospital2].conexiones[id_hospital1] = distancia
+            print(f"Conexión entre '{id_hospital1}' y '{id_hospital2}' agregada con distancia {distancia}.")
 
     def dijkstra(self, inicio: str, fin: str):
         distancias = {hospital: float("inf") for hospital in self.hospitales}
@@ -256,12 +263,14 @@ class GrafoHospitales:
         return []
 
     def mostrar_hospitales(self):
-        """Muestra todos los hospitales con su ID y especialidad."""
-        print("Lista de hospitales:")
-        for hospital in self.hospitales.values():
-            print(
-                f"ID: {hospital.id}, Nombre: {hospital.nombre}, Especialidad: {hospital.especialidad}"
-            )
+            """Muestra todos los hospitales con su ID y especialidad."""
+            print("---------------------------------------------")
+            print("Lista de hospitales: \n")
+            for hospital in self.hospitales.values():
+
+                print(hospital)
+
+            print("---------------------------------------------")
 
     def hospitales_ejemplos(self):
         # Agregar hospitales de ejemplo
