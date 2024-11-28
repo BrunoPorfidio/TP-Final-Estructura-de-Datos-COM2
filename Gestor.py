@@ -19,14 +19,21 @@ class GestorPacientes:
     def generar_id(self):
         return max(self.pacientes.keys(), default=0) + 1
 
-    def agregar_paciente(self, id: int = None, nombre: str = None, edad: int = None, gravedad: int = None, id_hospital: int = None, solicitar_datos: bool = True) -> None:
-        
+    def agregar_paciente(
+        self,
+        id: int = None,
+        nombre: str = None,
+        edad: int = None,
+        gravedad: int = None,
+        id_hospital: int = None,
+        solicitar_datos: bool = True,
+    ) -> None:
+
         if solicitar_datos:
-            nombre = self.validar_nombre() 
+            nombre = self.validar_nombre()
             edad = self.validar_edad()
             gravedad = self.validar_gravedad()
             id_hospital = self.validar_id_hospital(self.grafo_hospital)
-
 
         # Genera un nuevo ID para el paciente
         id_paciente = self.generar_id()
@@ -80,12 +87,6 @@ class GestorPacientes:
     def validar_id_hospital(self, grafo_hospital):
         """
         Solicita y valida que el ID del hospital exista en el grafo de hospitales.
-        
-        Args:
-            grafo_hospital: Una instancia del grafo que contiene los hospitales.
-        
-        Returns:
-            int: El ID del hospital validado.
         """
         id_hospital_es_valido = False
         while not id_hospital_es_valido:
