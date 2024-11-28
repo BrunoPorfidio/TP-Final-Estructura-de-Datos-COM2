@@ -8,7 +8,6 @@ def main():
     gestor.pacientes_ejemplos()  # Llama al método para agregar pacientescon datos estaticos
     grafo_hospitales.hospitales_ejemplos()  # Llama al método para agregar hospitales y conexiones con datos estaticos
     grafo_hospitales.conexiones_ejemplos()  # Llama al método para agregar conexiones de hospitales con datos estaticos
-    id_hospital = 1  # Contador para asignar ID a los hospitales
 
     sigue_eligiendo = True
 
@@ -65,7 +64,7 @@ def main():
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":                       # YA VALIDADO
-            gestor.agregar_paciente(any, any, any, any, any)
+            gestor.agregar_paciente()
 
         elif opcion == "2":                     # YA VALIDADO
             gestor.eliminar_paciente()     
@@ -102,16 +101,10 @@ def main():
             grafo_hospitales.agregar_hospital()
             
         elif opcion == "13":                    # YA VALIDADO
-            grafo_hospitales.agregar_conexion(any, any, any)
+            grafo_hospitales.agregar_conexion()
 
         elif opcion == "14":                    # NO REQUIERE VALIDACION, SOLO ES MOSTRAR LOS HOSPITALES
-            print("---------------------------------------------")
-            print("Lista de hospitales: \n")
-            for hospital in grafo_hospitales.hospitales.values():
-
-                print(hospital)
-
-            print("---------------------------------------------")
+            grafo_hospitales.mostrar_hospitales()
 
         elif opcion == "15":                    # YA VALIDADO
             grafo_hospitales.mejor_ruta_ambulancia()

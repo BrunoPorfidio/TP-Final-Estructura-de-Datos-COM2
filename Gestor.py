@@ -15,6 +15,7 @@ class GestorPacientes:
         self.grafo_hospital.hospitales_ejemplos()  # Llama al método para agregar hospitales y conexiones con datos estaticos
         self.id_contador = 0
         self.pacientes = {}
+
     def generar_id(self):
         return max(self.pacientes.keys(), default=0) + 1
 
@@ -60,11 +61,8 @@ class GestorPacientes:
 
             id_hospital_valida = False
             while not id_hospital_valida:  # Verificamos que no está vacío
-                print("---------------------------------------------")
-                print("Lista de hospitales: \n")
-                for hospital in self.grafo_hospital.hospitales.values():
-                    print(hospital)
-                print("---------------------------------------------")
+
+                self.grafo_hospital.mostrar_hospitales()
 
                 try:
                     id_hospital = int(input("ID del Hospital del paciente: ").strip())
@@ -73,7 +71,9 @@ class GestorPacientes:
                     else:
                         print("El ID del hospital ingresado no existe.")
                 except ValueError:
-                    print("Por favor, ingrese un número válido para el ID del hospital.")
+                    print(
+                        "Por favor, ingrese un número válido para el ID del hospital."
+                    )
 
         # Genera un nuevo ID para el paciente
         id_paciente = self.generar_id()
@@ -343,8 +343,11 @@ class GestorPacientes:
     def mostrar_todos_pacientes(self) -> None:
 
         pacientes = self.arbol_pacientes.recorrido_inorden()
-        for paciente in pacientes:
-            print(paciente)
+        if not pacientes:
+            print("No hay más pacientes para atender.")
+        else:
+            for paciente in pacientes:
+                print(paciente)
 
     def mostrar_cola_prioridad(self) -> None:
         if self.cola_prioridad.esta_vacia() == True:
@@ -420,7 +423,7 @@ class GestorPacientes:
 
         return id_hospital
 
-    def agregar_paso_diagnostico(self):
+    def agregar_paso_diagnostico(self) -> None:
         id_paso = input("Ingrese el ID del paso de diagnóstico: ")
         descripcion = input("Ingrese la descripción del paso: ")
         sintomas = input(
@@ -435,7 +438,7 @@ class GestorPacientes:
         self.diagnostico_enfermedad.agregar_paso(id_paso, descripcion, sintomas)
         print(f"Paso de diagnóstico '{id_paso}' agregado.")
 
-    def agregar_dependencia_diagnostico(self):
+    def agregar_dependencia_diagnostico(self) -> None:
         paso_anterior = input("Ingrese el ID del paso que dependera del siguiente: ")
         paso_siguiente = input("Ingrese el ID del paso dependiende del anterior: ")
 
@@ -449,7 +452,7 @@ class GestorPacientes:
         self.diagnostico_enfermedad.agregar_dependencia(paso_anterior, paso_siguiente)
         print(f"Dependencia agregada: {paso_anterior} -> {paso_siguiente}")
 
-    def mostrar_secuencia_diagnostico(self):
+    def mostrar_secuencia_diagnostico(self) -> None:
         sintomas_presentes = input(
             "Ingrese los síntomas presentes (separados por coma): "
         ).split(",")
@@ -461,7 +464,7 @@ class GestorPacientes:
 
         self.diagnostico_enfermedad.mostrar_secuencia_diagnostico(sintomas_presentes)
 
-    def pacientes_ejemplos(self):
+    def pacientes_ejemplos(self) -> None:
         pacientes_ejemplo = [
             {
                 "id": 1,
