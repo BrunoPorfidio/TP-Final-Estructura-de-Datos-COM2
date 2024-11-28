@@ -8,16 +8,22 @@ class GrafoHospitales:
     def __init__(self):
         self.hospitales = {}  # Almacena hospitales con su nombre como clave
 
+
+    def generar_id(self):
+        return max(self.hospitales.keys(), default=0) + 1
+    
     def agregar_hospital(
         self,
-        id: int,
+        id: int= None,
         nombre: str = None,
         especialidad: str = None,
         solicitar_datos: bool = True,
     ):
+        if id is None:
+                id = self.generar_id()
+        # Validación del nombre del hospital
         # Si se debe solicitar datos al usuario
         if solicitar_datos:
-            # Validación del nombre del hospital
             nombre_valido = False
             while not nombre_valido:
                 nombre = input("Ingrese el nombre del hospital a agregar: ").strip()
@@ -39,11 +45,15 @@ class GrafoHospitales:
                 print("El nombre y la especialidad no pueden ser nulos.")
                 return
 
+        # Si no se proporciona un ID, generamos uno nuevo
+        if id is None:
+            id = self.generar_id()
+
         # Verificar si el hospital ya existe
         if id not in self.hospitales:
             # Si no existe, se agrega el hospital
             self.hospitales[id] = Hospital(id, nombre, especialidad)
-            print(f"Hospital '{nombre}' agregado.")
+            print(f"Hospital '{nombre}' agregado con ID {id}.")
         else:
             # Si el hospital ya existe, mostrar mensaje de error
             print(f"El hospital con ID {id} ya existe.")

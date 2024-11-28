@@ -12,20 +12,19 @@ class GestorPacientes:
         self.cola_prioridad = ColaDePrioridad()
         self.grafo_hospital = GrafoHospitales()
         self.diagnostico_enfermedad = DiagnosticoEnfermedad()
+        self.grafo_hospital.hospitales_ejemplos()  # Llama al método para agregar hospitales y conexiones con datos estaticos
         self.id_contador = 0
         self.pacientes = {}
-
-    def generar_id(self) -> int:
-        self.id_contador += 1
-        return self.id_contador
+    def generar_id(self):
+        return max(self.pacientes.keys(), default=0) + 1
 
     def agregar_paciente(
         self,
-        id: int,
-        nombre: str,
-        edad: int,
-        gravedad: int,
-        id_hospital: int,
+        id: int = None,
+        nombre: str = None,
+        edad: int = None,
+        gravedad: int = None,
+        id_hospital: int = None,
         solicitar_datos: bool = True,
     ) -> None:
         if solicitar_datos:
@@ -39,46 +38,55 @@ class GestorPacientes:
 
             edad_valida = False
             while not edad_valida:
-                edad = int(input("Ingrese la edad del paciente: ").strip())
-                if edad > 0:  # Verificamos que no sea negativo
-
-                    edad_valida = True
-                else:
-                    print("La edad debe ser un número entero.")
+                try:
+                    edad = int(input("Ingrese la edad del paciente: ").strip())
+                    if edad > 0:  # Verificamos que no sea negativo
+                        edad_valida = True
+                    else:
+                        print("La edad debe ser un número entero positivo.")
+                except ValueError:
+                    print("Por favor, ingrese un número válido para la edad.")
 
             gravedad_valida = False
             while not gravedad_valida:  # Verificamos que no está vacío
-                gravedad = int(input("Ingrese la gravedad del paciente: ").strip())
-                if gravedad > 0:
-                    gravedad_valida = True
-                else:
-                    print("La gravedad debe ser un número entero.")
+                try:
+                    gravedad = int(input("Ingrese la gravedad del paciente: ").strip())
+                    if gravedad > 0:
+                        gravedad_valida = True
+                    else:
+                        print("La gravedad debe ser un número entero positivo.")
+                except ValueError:
+                    print("Por favor, ingrese un número válido para la gravedad.")
 
             id_hospital_valida = False
             while not id_hospital_valida:  # Verificamos que no está vacío
-                id_hospital = int(input("ID del Hospital del paciente: ").strip())
-                if id_hospital > 0:
-                    id_hospital_valida = True
-                else:
-                    print("El ID debe ser un número entero.")
+                print("---------------------------------------------")
+                print("Lista de hospitales: \n")
+                for hospital in self.grafo_hospital.hospitales.values():
+                    print(hospital)
+                print("---------------------------------------------")
 
-        # Verificar si el paciente ya existe
-        if id not in self.pacientes:
-            # Genera un nuevo ID para el paciente
-            id_paciente = self.generar_id()
+                try:
+                    id_hospital = int(input("ID del Hospital del paciente: ").strip())
+                    if id_hospital in self.grafo_hospital.hospitales:
+                        id_hospital_valida = True
+                    else:
+                        print("El ID del hospital ingresado no existe.")
+                except ValueError:
+                    print("Por favor, ingrese un número válido para el ID del hospital.")
 
-            paciente = Paciente(id_paciente, nombre, edad, gravedad, id_hospital)
+        # Genera un nuevo ID para el paciente
+        id_paciente = self.generar_id()
 
-            self.pacientes[id] = paciente
+        # Crear el nuevo paciente
+        paciente = Paciente(id_paciente, nombre, edad, gravedad, id_hospital)
 
-            # Insertar el paciente en el árbol y la cola de prioridad
-            self.arbol_pacientes.insertar(paciente)
-            self.cola_prioridad.agregar(paciente)
+        # Agregar el paciente a las estructuras de datos
+        self.pacientes[id_paciente] = paciente
+        self.arbol_pacientes.insertar(paciente)
+        self.cola_prioridad.agregar(paciente)
 
-            print(f"Paciente '{nombre}' agregado con ID {id_paciente}.")
-        else:
-            # Si el paciente ya existe, mostrar mensaje de error
-            print(f"El Paciente con ID {id} ya existe.")
+        print(f"Paciente '{nombre}' agregado con ID {id_paciente}.")
 
     def eliminar_paciente(self) -> None:
 

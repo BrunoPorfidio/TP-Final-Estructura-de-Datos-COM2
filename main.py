@@ -99,8 +99,7 @@ def main():
             gestor.agregar_medicamento()
 
         elif opcion == "12":                    # YA VALIDADO
-            grafo_hospitales.agregar_hospital(id_hospital)
-            id_hospital += 1  # Incrementar el ID para el próximo hospital
+            grafo_hospitales.agregar_hospital()
             
         elif opcion == "13":                    # YA VALIDADO
             grafo_hospitales.agregar_conexion(any, any, any)
