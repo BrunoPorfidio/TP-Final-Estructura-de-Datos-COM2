@@ -5,48 +5,11 @@ from GrafoHospital import GrafoHospitales
 def main():
     gestor = GestorPacientes()
     grafo_hospitales = GrafoHospitales()  # Instancia de GrafoHospitales
+    gestor.pacientes_ejemplos()  # Llama al método para agregar pacientescon datos estaticos
+    grafo_hospitales.hospitales_ejemplos()  # Llama al método para agregar hospitales y conexiones con datos estaticos
+    grafo_hospitales.conexiones_ejemplos()  # Llama al método para agregar conexiones de hospitales con datos estaticos
     id_hospital = 1  # Contador para asignar ID a los hospitales
 
-#---------------------------------------------------------------------------------------------------------------
-    """
-    grafo_hospitales.agregar_hospital(1, "Hospital A", "Cardiología")
-    id_hospital +=1
-    grafo_hospitales.agregar_hospital(2, "Hospital B", "Neurología")
-    id_hospital +=1
-    grafo_hospitales.agregar_hospital(3, "Hospital C", "Pediatría")
-    id_hospital +=1
-    grafo_hospitales.agregar_hospital(4, "Hospital D", "Traumatología")
-    id_hospital +=1
-    grafo_hospitales.agregar_hospital(5, "Hospital E", "Ginecología")
-    id_hospital +=1
-    print("Hospitales de ejemplo agregados.\n")
-
-    # Agregar conexiones entre hospitales
-    grafo_hospitales.agregar_conexion(1, 2, 10)  # Hospital A <-> Hospital B
-    grafo_hospitales.agregar_conexion(2, 3, 15)  # Hospital B <-> Hospital C
-    grafo_hospitales.agregar_conexion(3, 4, 20)  # Hospital C <-> Hospital D
-    grafo_hospitales.agregar_conexion(4, 5, 25)  # Hospital D <-> Hospital E
-    grafo_hospitales.agregar_conexion(1, 5, 30)  # Hospital A <-> Hospital E
-    """
-    
-    pacientes_ejemplo = [
-        {"nombre": "Juan Pérez", "edad": 30, "gravedad": 4, "id_hospital": "1"},  # Hospital Central
-        {"nombre": "Ana Gómez", "edad": 45, "gravedad": 5, "id_hospital": "2"},  # Hospital San José
-        {"nombre": "Carlos López", "edad": 60, "gravedad": 3, "id_hospital": "1"},  # Hospital Central
-        {"nombre": "María Rodríguez", "edad": 25, "gravedad": 2, "id_hospital": "2"},  # Hospital San José
-    ]
-    
-    # Agregamos los pacientes al sistema
-    for paciente in pacientes_ejemplo:
-        gestor.agregar_paciente(
-            paciente["nombre"], 
-            paciente["edad"], 
-            paciente["gravedad"], 
-            paciente["id_hospital"]
-        )
-    
-    print("Pacientes de ejemplo agregados.\n")
-#---------------------------------------------------------------------------------------------------------------------
     sigue_eligiendo = True
 
     while sigue_eligiendo:
@@ -79,6 +42,11 @@ def main():
                 " Mostrar mejor ruta de ambulancia", 
                 " Encontrar ruta usando BFS", 
                 " Encontrar ruta usando DFS" 
+            ],
+            "Diagnóstico de Enfermedad": [
+                " Agregar paso de diagnóstico",
+                " Agregar dependencia entre pasos",
+                " Mostrar secuencia de diagnóstico"
             ]
         }
 
@@ -96,18 +64,8 @@ def main():
         
         opcion = input("Seleccione una opción: ")
 
-        if opcion == "1":
-
-            # SE DEJAN LOS INPUTS ACA PARA QUE SE AGREGEN SOLOS A LOS PACIENTES, PERO EN EL CODIGO IDEAL DEBERIA APARECER SOLO LA FUNCION
-            # GESTOR.AGREGAR_PACIENTE()
-
-            nombre = input("Nombre del paciente: ")
-            edad = int(input("Edad del paciente: "))
-            gravedad = int(input("Gravedad del paciente (1-5): "))
-            grafo_hospitales.mostrar_hospitales()
-            id_hospital_paciente = input("ID del Hospital del paciente: ")
-            gestor.agregar_paciente(nombre, edad, gravedad, id_hospital_paciente)
-            #gestor.agregar_paciente()
+        if opcion == "1":                       # YA VALIDADO
+            gestor.agregar_paciente(any, any, any, any, any)
 
         elif opcion == "2":                     # YA VALIDADO
             gestor.eliminar_paciente()     
@@ -126,7 +84,6 @@ def main():
             gestor.mostrar_cola_prioridad()
 
         elif opcion == "7":                     # YA VALIDADO
-
             gestor.atender_paciente_mas_grave()
 
         elif opcion == "8":                     # YA VALIDADO
@@ -146,7 +103,7 @@ def main():
             id_hospital += 1  # Incrementar el ID para el próximo hospital
             
         elif opcion == "13":                    # YA VALIDADO
-            grafo_hospitales.agregar_conexion()
+            grafo_hospitales.agregar_conexion(any, any, any)
 
         elif opcion == "14":                    # NO REQUIERE VALIDACION, SOLO ES MOSTRAR LOS HOSPITALES
             print("---------------------------------------------")
