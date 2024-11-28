@@ -42,7 +42,7 @@ class ColaDePrioridad:
         """Verifica si la cola de prioridad está vacía."""
         return not self.buscar_entrada
 
-    def cantidad(self):
+    def cantidad(self) -> int:
         """Retorna la cantidad de pacientes en la cola de prioridad."""
         return len(self.buscar_entrada)
 

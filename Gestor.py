@@ -19,61 +19,14 @@ class GestorPacientes:
     def generar_id(self):
         return max(self.pacientes.keys(), default=0) + 1
 
-    def agregar_paciente(
-        self,
-        id: int = None,
-        nombre: str = None,
-        edad: int = None,
-        gravedad: int = None,
-        id_hospital: int = None,
-        solicitar_datos: bool = True,
-    ) -> None:
+    def agregar_paciente(self, id: int = None, nombre: str = None, edad: int = None, gravedad: int = None, id_hospital: int = None, solicitar_datos: bool = True) -> None:
+        
         if solicitar_datos:
-            nombre_valido = False
-            while not nombre_valido:
-                nombre = input("Ingrese el nombre del paciente: ").strip()
-                if nombre:  # Verificamos que no esté vacío
-                    nombre_valido = True
-                else:
-                    print("El nombre del paciente no puede estar vacío.")
+            nombre = self.validar_nombre() 
+            edad = self.validar_edad()
+            gravedad = self.validar_gravedad()
+            id_hospital = self.validar_id_hospital(self.grafo_hospital)
 
-            edad_valida = False
-            while not edad_valida:
-                try:
-                    edad = int(input("Ingrese la edad del paciente: ").strip())
-                    if edad > 0:  # Verificamos que no sea negativo
-                        edad_valida = True
-                    else:
-                        print("La edad debe ser un número entero positivo.")
-                except ValueError:
-                    print("Por favor, ingrese un número válido para la edad.")
-
-            gravedad_valida = False
-            while not gravedad_valida:  # Verificamos que no está vacío
-                try:
-                    gravedad = int(input("Ingrese la gravedad del paciente: ").strip())
-                    if gravedad > 0:
-                        gravedad_valida = True
-                    else:
-                        print("La gravedad debe ser un número entero positivo.")
-                except ValueError:
-                    print("Por favor, ingrese un número válido para la gravedad.")
-
-            id_hospital_valida = False
-            while not id_hospital_valida:  # Verificamos que no está vacío
-
-                self.grafo_hospital.mostrar_hospitales()
-
-                try:
-                    id_hospital = int(input("ID del Hospital del paciente: ").strip())
-                    if id_hospital in self.grafo_hospital.hospitales:
-                        id_hospital_valida = True
-                    else:
-                        print("El ID del hospital ingresado no existe.")
-                except ValueError:
-                    print(
-                        "Por favor, ingrese un número válido para el ID del hospital."
-                    )
 
         # Genera un nuevo ID para el paciente
         id_paciente = self.generar_id()
@@ -87,6 +40,61 @@ class GestorPacientes:
         self.cola_prioridad.agregar(paciente)
 
         print(f"Paciente '{nombre}' agregado con ID {id_paciente}.")
+
+    def validar_nombre(self):
+        """
+        Solicita y valida que el nombre no esté vacío.
+        """
+        nombre_es_valido = False
+        while not nombre_es_valido:
+            nombre = input("Ingrese el nombre del paciente: ").strip()
+            if nombre:
+                return nombre
+            else:
+                print("El nombre del paciente no puede estar vacío.")
+
+    def validar_edad(self):
+        """
+        Solicita y valida que la edad sea un número entero positivo.
+        """
+        edad_es_valida = False
+        while not edad_es_valida:
+            edad = input("Ingrese la edad del paciente: ").strip()
+            if edad.isdigit() and int(edad) > 0:
+                return int(edad)
+            else:
+                print("La edad debe ser un número entero positivo.")
+
+    def validar_gravedad(self):
+        """
+        Solicita y valida que la gravedad sea un número entero positivo.
+        """
+        gravedad_es_valida = False
+        while not gravedad_es_valida:
+            gravedad = input("Ingrese la gravedad del paciente: ").strip()
+            if gravedad.isdigit() and int(gravedad) > 0:
+                return int(gravedad)
+            else:
+                print("La gravedad debe ser un número entero positivo.")
+
+    def validar_id_hospital(self, grafo_hospital):
+        """
+        Solicita y valida que el ID del hospital exista en el grafo de hospitales.
+        
+        Args:
+            grafo_hospital: Una instancia del grafo que contiene los hospitales.
+        
+        Returns:
+            int: El ID del hospital validado.
+        """
+        id_hospital_es_valido = False
+        while not id_hospital_es_valido:
+            grafo_hospital.mostrar_hospitales()
+            id_hospital = input("ID del Hospital del paciente: ").strip()
+            if id_hospital.isdigit() and int(id_hospital) in grafo_hospital.hospitales:
+                return int(id_hospital)
+            else:
+                print("El ID del hospital ingresado no existe.")
 
     def eliminar_paciente(self) -> None:
 

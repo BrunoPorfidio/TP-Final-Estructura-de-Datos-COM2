@@ -7,19 +7,19 @@ class DiagnosticoEnfermedad:
         self.grafo = defaultdict(list)
         self.sintomas = defaultdict(list)
 
-    def agregar_paso(self, id_paso, descripcion, sintomas_requeridos=None):
+    def agregar_paso(self, id_paso, descripcion, sintomas_requeridos=None) -> None:
         self.pasos[id_paso] = descripcion
         if sintomas_requeridos:
             for sintoma in sintomas_requeridos:
                 self.sintomas[sintoma].append(id_paso)
 
-    def agregar_dependencia(self, paso_anterior, paso_siguiente):
+    def agregar_dependencia(self, paso_anterior, paso_siguiente) -> None:
         if paso_anterior in self.pasos and paso_siguiente in self.pasos:
             self.grafo[paso_anterior].append(paso_siguiente)
         else:
             print("Error: Uno o ambos pasos no existen.")
 
-    def ordenamiento_topologico(self):
+    def ordenamiento_topologico(self) -> list:
         visitado = set()
         pila = []
 
@@ -36,7 +36,7 @@ class DiagnosticoEnfermedad:
 
         return pila[::-1]
 
-    def diagnosticar(self, sintomas_presentes):
+    def diagnosticar(self, sintomas_presentes) -> list:
         pasos_aplicables = set()
         for sintoma in sintomas_presentes:
             pasos_aplicables.update(self.sintomas[sintoma])
@@ -46,7 +46,7 @@ class DiagnosticoEnfermedad:
 
         return secuencia_filtrada
 
-    def mostrar_secuencia_diagnostico(self, sintomas_presentes):
+    def mostrar_secuencia_diagnostico(self, sintomas_presentes) -> None:
         secuencia = self.diagnosticar(sintomas_presentes)
         if secuencia:
             print("Secuencia de diagnóstico basada en los síntomas:")

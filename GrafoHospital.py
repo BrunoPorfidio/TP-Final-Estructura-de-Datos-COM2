@@ -61,6 +61,7 @@ class GrafoHospitales:
             print(f"El hospital con ID {id} ya existe.")
 
     def agregar_conexion(self, id_hospital1: int = None, id_hospital2: int= None,distancia: int= None, solicitar_datos: bool = True):
+
         if solicitar_datos:
             # Mostrar hospitales disponibles
             self.mostrar_hospitales()
@@ -106,6 +107,7 @@ class GrafoHospitales:
                         print("La distancia debe ser un número entero positivo.")
                 else:
                     print("La distancia debe ser un número entero.")
+                    
         else:
             # Si no se solicitan datos, se utilizan los valores de los argumentos
             if id_hospital1 is None or id_hospital2 is None or distancia is None:

@@ -16,19 +16,19 @@ class Paciente:
         self.medicamentos: List[Medicamento] = []  # Cambiado a lista de objetos Medicamento
         self.enfermedades: List[Enfermedad] = []  # Nuevo historial de enfermedades
 
-    def agregar_evento_medico(self, tipo: str, detalles: str):
+    def agregar_evento_medico(self, tipo: str, detalles: str) -> None:
         self.historial.append(EventoMedico(tipo, detalles))
 
-    def agregar_medicamento(self, medicamento: str):
+    def agregar_medicamento(self, medicamento: str) -> None:
         self.medicamentos.append(Medicamento(medicamento))  # Agregar medicamento como objeto
 
-    def agregar_enfermedad(self, enfermedad: str):
+    def agregar_enfermedad(self, enfermedad: str) -> None:
         self.enfermedades.append(Enfermedad(enfermedad))  # Agregar enfermedad al historial
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"\n·ID: {self.id}\n Nombre: {self.nombre}\n Edad: {self.edad}\n Gravedad: {self.gravedad}\n ID de hospital actual: {self.id_hospital}"
 
-    def detalle_completo(self):
+    def detalle_completo(self) -> str:
         # Formatear el historial
         historial_str = '\n    '.join(f"- {evento}" for evento in self.historial)
         
